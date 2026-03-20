@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-inter: var(--font-inter);
+  --font-playfair: var(--font-playfair);
+  --font-dancing: var(--font-dancing);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-navy: #1A2B6B;
+  --color-orange: #E07B3A;
+  --color-visa-free: #16a34a;
+  --color-visa-easy: #db2777;
+  --color-visa-standard: #ea580c;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+  color: #111827;
+  background: #ffffff;
+}
+
+.font-inter { font-family: var(--font-inter), Inter, Arial, sans-serif; }
+.font-playfair { font-family: var(--font-playfair), Georgia, serif; }
+.font-dancing { font-family: var(--font-dancing), cursive; }
+
+/* Leaflet map fix */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Global animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes dropdownSlide {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
 }
