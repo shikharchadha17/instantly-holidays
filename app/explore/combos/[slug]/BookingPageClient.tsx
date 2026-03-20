@@ -114,14 +114,22 @@ const STYLE_COLORS: Record<TravelStyle, { bg: string; text: string; border: stri
   "Heritage & Art": { bg:"#fff7ed", text:"#c2410c", border:"#fdba74" },
 };
 
-/* ── Air India SVG logo ──────────────────────────────────────────────── */
+/* ── Air India logo block ────────────────────────────────────────────── */
 function AirIndiaLogo() {
   return (
-    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0"
-      style={{ background: "#fef2f2" }}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#e03131"/>
-      </svg>
+    <div className="flex flex-col items-center gap-1 flex-shrink-0">
+      {/* Logo circle */}
+      <div className="w-11 h-11 rounded-full flex items-center justify-center"
+        style={{ background: "linear-gradient(135deg, #c8102e 0%, #e8192c 100%)", boxShadow: "0 2px 8px rgba(200,16,46,0.35)" }}>
+        {/* Flying swan – Air India's iconic bird */}
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+          <path d="M6 22 C8 18, 13 14, 20 13 L28 12 L24 15 L18 15.5 C15 16, 12 18, 10 21 Z" fill="white" opacity="0.95"/>
+          <path d="M10 21 C12 19, 15 17.5, 19 17 L25 16.5 L22 19 L16 20 C13 20.5, 11 22, 10 24 Z" fill="white" opacity="0.75"/>
+          <circle cx="22" cy="11" r="2" fill="#FFD700"/>
+        </svg>
+      </div>
+      {/* Airline name */}
+      <span className="text-[9px] font-bold tracking-wide uppercase" style={{ color: "#c8102e", letterSpacing: "0.04em" }}>Air India</span>
     </div>
   );
 }
