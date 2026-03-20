@@ -140,7 +140,7 @@ export default function BookingPageClient({ dest }: { dest: Destination }) {
   const savings       = originalPrice - totalPrice;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white pb-[80px] md:pb-0">
       <Header />
 
       <div className="flex-1 flex flex-col md:flex-row" style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 16px" }}>
@@ -443,15 +443,66 @@ export default function BookingPageClient({ dest }: { dest: Destination }) {
 
                 {/* Book Now */}
                 <button
-                  className="w-full py-4 rounded-2xl text-sm font-bold text-white tracking-wide transition-opacity hover:opacity-90"
-                  style={{ background:"#07213a" }}
+                  className="w-full py-4 rounded-2xl font-bold text-white tracking-wide relative overflow-hidden group"
+                  style={{
+                    background: "linear-gradient(135deg, #1a3a5c 0%, #07213a 60%, #0d2d4f 100%)",
+                    boxShadow: "0 4px 20px rgba(7,33,58,0.45), inset 0 1px 0 rgba(255,255,255,0.08)",
+                    fontSize: 15,
+                  }}
                 >
-                  Book Now
+                  {/* shimmer */}
+                  <span
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%)",
+                    }}
+                  />
+                  <span className="relative flex items-center justify-center gap-2.5">
+                    <svg className="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2}
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    Confirm &amp; Book
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                  <p className="relative text-[11px] font-normal opacity-60 mt-0.5 tracking-normal">Secure booking · No hidden charges</p>
                 </button>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ── Mobile sticky bottom bar ── */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 px-4 py-3 flex items-center gap-3"
+        style={{ boxShadow: "0 -4px 24px rgba(0,0,0,0.10)" }}>
+        <div className="flex flex-col flex-1 min-w-0">
+          <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wide">Total Price</span>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-gray-900 text-lg leading-tight">{formatINRFull(totalPrice)}</span>
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background:"#fff4e0", color:"#d97706" }}>20% OFF</span>
+          </div>
+          <span className="text-xs text-gray-400 line-through">{formatINRFull(Math.round(totalPrice * 1.25))}</span>
+        </div>
+        <button
+          className="flex-shrink-0 flex flex-col items-center justify-center px-6 py-3 rounded-2xl font-bold text-white relative overflow-hidden group"
+          style={{
+            background: "linear-gradient(135deg, #1a3a5c 0%, #07213a 60%, #0d2d4f 100%)",
+            boxShadow: "0 4px 16px rgba(7,33,58,0.40)",
+            minWidth: 140,
+          }}
+        >
+          <span className="flex items-center gap-1.5 text-sm">
+            <svg className="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2}
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Confirm &amp; Book
+          </span>
+          <span className="text-[10px] font-normal opacity-60 mt-0.5">No hidden charges</span>
+        </button>
       </div>
 
       <Footer />
