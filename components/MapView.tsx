@@ -62,8 +62,6 @@ function MapInner({ destinations, onSelectDest, flyToSlug }: { destinations: Des
     let map: import("leaflet").Map | null = null;
 
     (async () => {
-      // @ts-ignore
-      await import("leaflet/dist/leaflet.css");
       const leaflet = await import("leaflet");
       const L = leaflet.default ?? leaflet;
       if (!containerRef.current) return;
