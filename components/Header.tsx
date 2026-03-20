@@ -132,15 +132,15 @@ export default function Header({ rightContent, onDestSelect }: { rightContent?: 
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-[#e9e9e9] shadow-[0px_4px_14px_0px_rgba(180,178,178,0.25)]" ref={ref}>
-      <div className="flex items-center justify-between px-8 py-4 w-full">
+      <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4 w-full">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0 w-[198px]">
+        <Link href="/" className="flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO} alt="Instantly Holiday by C&K" style={{ height: "55px", width: "130px", objectFit: "contain" }} />
+          <img src={LOGO} alt="Instantly Holiday by C&K" style={{ height: "46px", width: "110px", objectFit: "contain" }} />
         </Link>
 
-        {/* Search pill */}
-        <div className="flex flex-col items-center justify-center relative">
+        {/* Search pill — hidden on mobile */}
+        <div className="hidden md:flex flex-col items-center justify-center relative">
           <div className="border border-[#e4e4e4] flex gap-4 items-center pl-6 pr-3 py-2 rounded-[170px]">
             <div className="flex gap-4 items-center w-[596px]">
 
@@ -336,11 +336,66 @@ export default function Header({ rightContent, onDestSelect }: { rightContent?: 
           )}
         </div>
 
-        {/* Right content */}
-        {rightContent ?? (
+        {/* Mobile: search icon + explore */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            onClick={() => setActiveField(activeField === "where" ? null : "where")}
+            className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center"
+            style={{ background: "#f5f5f5" }}
+          >
+            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
           <Link
             href="/explore"
-            className="flex-shrink-0 flex items-center gap-1 text-white text-base font-semibold px-4 py-2 rounded-[8px] shadow-[0px_4px_14px_0px_rgba(148,148,148,0.25)] transition-opacity hover:opacity-90"
+            className="flex items-center gap-1 text-white text-sm font-semibold px-3 py-1.5 rounded-[8px] hover:opacity-90 transition-opacity"
+            style={{ background: "#345ee9" }}
+          >
+            Explore
+          </Link>
+        </div>
+
+        {/* Mobile WHERE dropdown */}
+        {activeField === "where" && (
+          <div
+            className="md:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl shadow-[0px_8px_40px_rgba(0,0,0,0.12)] border border-gray-100 z-50 p-4"
+            style={{ animation: "dropdownSlide 0.22s cubic-bezier(0.34,1.4,0.64,1) both" }}
+          >
+            <input
+              autoFocus
+              value={destQuery}
+              onChange={(e) => setDestQuery(e.target.value)}
+              placeholder="Search destinations…"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 mb-4"
+            />
+            <div className="grid grid-cols-2 gap-3 max-h-[280px] overflow-y-auto">
+              {filteredDests.map((d) => (
+                <button
+                  key={d.slug}
+                  onClick={() => { setSelectedDest(d.name); setActiveField(null); setDestQuery(""); onDestSelect?.(d.slug); }}
+                  className={`relative rounded-xl overflow-hidden text-left group transition-all hover:ring-2 hover:ring-[#345ee9] ${selectedDest === d.name ? "ring-2 ring-[#345ee9]" : ""}`}
+                  style={{ height: 90 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={d.image} alt={d.name} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <p className="text-white text-[12px] font-semibold leading-tight">{d.name}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Right content */}
+        {rightContent ? (
+          <div className="hidden md:flex">{rightContent}</div>
+        ) : (
+          <Link
+            href="/explore"
+            className="hidden md:flex flex-shrink-0 items-center gap-1 text-white text-base font-semibold px-4 py-2 rounded-[8px] shadow-[0px_4px_14px_0px_rgba(148,148,148,0.25)] transition-opacity hover:opacity-90"
             style={{ background: "#345ee9" }}
           >
             Explore{" "}

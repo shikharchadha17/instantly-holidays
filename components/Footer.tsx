@@ -13,11 +13,11 @@ export default function Footer() {
       className="text-white rounded-tl-[32px] rounded-tr-[32px]"
       style={{ background: "#07213a" }}
     >
-      <div className="px-20 pt-10 pb-0 flex flex-col gap-6">
+      <div className="px-6 sm:px-10 md:px-20 pt-10 pb-0 flex flex-col gap-6">
         {/* Main row */}
-        <div className="flex items-start justify-between w-full">
+        <div className="flex flex-col sm:flex-row items-start justify-between w-full gap-8 sm:gap-4">
           {/* Col 1: tagline + socials */}
-          <div className="flex flex-col gap-6 w-[379px]">
+          <div className="flex flex-col gap-6 w-full sm:w-[280px] md:w-[379px]">
             <p className="font-normal text-[14px] text-white leading-[22px]">
               Plan less. Travel more.Instant holidays designed for effortless booking and seamless experiences.
             </p>
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
 
           {/* Col 2 + 3: links */}
-          <div className="flex gap-[76px] items-center">
+          <div className="flex gap-8 md:gap-[76px] items-start">
             <div className="flex flex-col gap-4 w-[118px]">
               {["About Us", "Blogs", "Testimonials", "Contact Us"].map((l) => (
                 <a key={l} href="#" className="font-normal text-[14px] text-white leading-[22px] hover:opacity-80 transition-opacity">{l}</a>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           {/* Col 4: Contact */}
-          <div className="flex flex-col gap-[9px] w-[199px]">
+          <div className="flex flex-col gap-[9px] w-full sm:w-auto">
             <p className="font-semibold text-[16px] text-white leading-6">Contact Us</p>
             <div className="flex items-center gap-[8px]">
               <svg className="w-[18px] h-[18px] shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
