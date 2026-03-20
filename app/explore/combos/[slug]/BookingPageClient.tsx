@@ -143,10 +143,10 @@ export default function BookingPageClient({ dest }: { dest: Destination }) {
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <div className="flex-1 flex" style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 32px" }}>
+      <div className="flex-1 flex flex-col md:flex-row" style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 16px" }}>
 
         {/* ── LEFT COLUMN ─────────────────────────────────────────── */}
-        <div className="flex-1 min-w-0 py-8 pr-10">
+        <div className="flex-1 min-w-0 py-6 md:py-8 md:pr-10">
 
           {/* Breadcrumb */}
           <nav className="text-sm mb-4 flex items-center gap-1">
@@ -179,12 +179,12 @@ export default function BookingPageClient({ dest }: { dest: Destination }) {
           </div>
 
           {/* Photo gallery */}
-          <div className="flex gap-3 mb-5" style={{ height: 280 }}>
+          <div className="flex gap-2 md:gap-3 mb-5" style={{ height: 200 }}>
             <div className="rounded-xl overflow-hidden" style={{ flex:"62 1 0" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={gallery[0]} alt={dest.name} className="w-full h-full object-cover" />
             </div>
-            <div className="flex flex-col gap-3" style={{ flex:"38 1 0" }}>
+            <div className="hidden sm:flex flex-col gap-2 md:gap-3" style={{ flex:"38 1 0" }}>
               <div className="flex-1 rounded-xl overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={gallery[1]} alt={dest.name} className="w-full h-full object-cover" />
@@ -383,8 +383,8 @@ export default function BookingPageClient({ dest }: { dest: Destination }) {
         </div>
 
         {/* ── RIGHT STICKY SIDEBAR ─────────────────────────────────── */}
-        <div className="flex-shrink-0 py-8" style={{ width: 300 }}>
-          <div className="sticky" style={{ top: 24 }}>
+        <div className="flex-shrink-0 py-0 pb-8 md:py-8 w-full md:w-[300px]">
+          <div className="md:sticky" style={{ top: 24 }}>
             <div
               className="rounded-2xl bg-white"
               style={{ border:"1px solid #e8eaed", boxShadow:"0 8px 32px rgba(0,0,0,0.10)" }}

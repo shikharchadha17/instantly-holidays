@@ -46,7 +46,12 @@ const STYLE_COLORS: Record<TravelStyle, { bg: string; text: string }> = {
 export default function ExplorePage() {
   const [view, setView] = useState<"card" | "map">("map");
   const [filters, setFilters] = useState<Filters>(defaultFilters);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Open sidebar by default on desktop
+  useEffect(() => {
+    if (window.innerWidth >= 768) setSidebarOpen(true);
+  }, []);
   const [showLegend, setShowLegend] = useState(false);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [lightboxVisible, setLightboxVisible] = useState(false);
@@ -139,16 +144,48 @@ export default function ExplorePage() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header rightContent={headerRight} />
 
-      <div className="flex flex-1 max-w-full px-4 py-4 gap-4" style={{ maxHeight: "calc(100vh - 90px)", overflow: "hidden" }}>
+      {/* Mobile filter toggle */}
+      <div className="md:hidden flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="flex items-center gap-2 text-sm font-medium text-gray-700 px-3 py-1.5 rounded-full border border-gray-200 bg-white"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M6 8h12M9 12h6" />
+          </svg>
+          Filters
+        </button>
+        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+          <button onClick={() => setView("map")} className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${view === "map" ? "bg-[#345ee9] text-white" : "text-gray-600"}`}>
+            Map
+          </button>
+          <button onClick={() => setView("card")} className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${view === "card" ? "bg-[#345ee9] text-white" : "text-gray-600"}`}>
+            Card
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div className="md:hidden fixed inset-0 z-[200] flex">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setSidebarOpen(false)} />
+          <div className="relative w-72 bg-white h-full overflow-y-auto shadow-xl">
+            <FilterSidebar filters={filters} onChange={setFilters} onClose={() => setSidebarOpen(false)} />
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-1 max-w-full px-2 md:px-4 py-2 md:py-4 gap-4" style={{ maxHeight: "calc(100vh - 90px)", overflow: "hidden" }}>
+        {/* Desktop sidebar */}
         {sidebarOpen && (
-          <div className="w-64 flex-shrink-0 overflow-y-auto">
+          <div className="hidden md:block w-64 flex-shrink-0 overflow-y-auto">
             <FilterSidebar filters={filters} onChange={setFilters} onClose={() => setSidebarOpen(false)} />
           </div>
         )}
         {!sidebarOpen && (
           <button
             onClick={() => setSidebarOpen(true)}
-            className="flex-shrink-0 self-start mt-2 bg-white border border-gray-200 rounded-full p-2 shadow-sm hover:shadow-md transition-shadow"
+            className="hidden md:flex flex-shrink-0 self-start mt-2 bg-white border border-gray-200 rounded-full p-2 shadow-sm hover:shadow-md transition-shadow"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -159,15 +196,15 @@ export default function ExplorePage() {
         <div className="flex-1 min-w-0 flex flex-col">
           {view === "card" ? (
             <div className="overflow-y-auto flex-1">
-              <p className="text-xl font-bold text-gray-900 mb-6">Pick your ideal trip from these awesome combos!</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <p className="text-base md:text-xl font-bold text-gray-900 mb-4 md:mb-6">Pick your ideal trip from these awesome combos!</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                 {filtered.map((dest) => (
                   <DestinationCard key={dest.slug} dest={dest} />
                 ))}
               </div>
             </div>
           ) : (
-            <div className="rounded-2xl overflow-hidden border border-gray-200 flex-1">
+            <div className="rounded-xl md:rounded-2xl overflow-hidden border border-gray-200 flex-1">
               <MapView destinations={filtered} onSelectDest={setSelectedSlug} />
             </div>
           )}
